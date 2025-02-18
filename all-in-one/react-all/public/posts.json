@@ -1,0 +1,21 @@
+
+[
+    {
+        "id": 101,
+        "title": "Pierwszy post",
+        "content": "To jest pierwszy post na blogu.",
+        "date": "2025-02-17"
+    },
+    {
+        "id": 102,
+        "title": "Drugi post",
+        "content": "Drugi post na blogu z ciekawymi treściami.",
+        "date": "2025-02-18"
+    },
+    {
+        "id": 103,
+        "title": "Trzeci post",
+        "content": "To trzeci post, który omawia ważny temat.",
+        "date": "2025-02-19"
+    }
+]
