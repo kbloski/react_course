@@ -32,7 +32,7 @@ function App() {
   useEffect(
     function () {
       document.documentElement.classList.toggle("fake-dark-mode");
-    },
+    }, 
     [isFakeDark]
   );
 
