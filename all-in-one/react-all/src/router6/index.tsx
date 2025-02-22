@@ -17,9 +17,12 @@ import ContextApiPage from '../features/Stores/contextApi/ContextApiPage'
 // ReduxToolkit 
 import ReduxPage from '../features/ReduxToolkit/ReduxPage'
 
+// React Router
+import ComponentWithLoader, {loader as ComponentLoader} from '../features/ReactRouter/TheLoader';
+
 const router = createBrowserRouter([{
     // Main routing 
-    element: <AppLayout />,
+    element: <AppLayout children={undefined} />,
     // errorElement: <ErrorPage />
 
     children: [
@@ -57,11 +60,22 @@ const router = createBrowserRouter([{
             path: '/redux-toolkit',
             element: <ReduxPage />
         },
+        {
+            path: '/router-v6',
+            children: [
+                {
+                    path: 'loader/:loaderId',
+                    element: <ComponentWithLoader />,
+                    loader: ComponentLoader,
+                }
+            ]
+        },
 
     ]
 }
 ])
 
+// Used in App.tsx
 export default function RouterV6Provider(){
     return <RouterProvider router={router} />
 }

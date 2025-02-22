@@ -55,7 +55,15 @@ function TheNavigation(){
                         <div>React Router</div>
                         <ul>
                             <li>Router v5 and before</li>
-                            <li>Router v6</li>
+                            <li>
+                                Router v6
+                                <ul>
+                                    <Link to='/router-v6/loader/33' >
+                                        <li>The loader for component</li>
+                                    </Link>
+                                </ul>
+                            </li>
+
                         </ul>
                     </li>
                 </ul>

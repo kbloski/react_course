@@ -4,7 +4,7 @@ import { Outlet, useNavigation } from 'react-router-dom'
 
 
 interface AppLayoutProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 export default function AppLayout({ children }: AppLayoutProps) {
