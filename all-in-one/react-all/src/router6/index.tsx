@@ -17,8 +17,9 @@ import ContextApiPage from '../features/Stores/contextApi/ContextApiPage'
 // ReduxToolkit 
 import ReduxPage from '../features/ReduxToolkit/ReduxPage'
 
-// React Router
-import ComponentWithLoader, {loader as ComponentLoader} from '../features/ReactRouter/TheLoader';
+// React Router 6+
+import ComponentWithLoader, {loader as loaderForComponent} from '../features/ReactRouter/TheLoader';
+import ComponentWithActions, { action as actionForComponent} from '../features/ReactRouter/TheActions';
 
 const router = createBrowserRouter([{
     // Main routing 
@@ -66,7 +67,12 @@ const router = createBrowserRouter([{
                 {
                     path: 'loader/:loaderId',
                     element: <ComponentWithLoader />,
-                    loader: ComponentLoader,
+                    loader: loaderForComponent,
+                },
+                {
+                    path: 'action',
+                    element: <ComponentWithActions />,
+                    action: actionForComponent
                 }
             ]
         },

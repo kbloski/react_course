@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, Route, Router, useLoaderData } from "react-router-dom";
+import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 
 function ComponentWithLoader(){
     const dataFromLoader = useLoaderData()
