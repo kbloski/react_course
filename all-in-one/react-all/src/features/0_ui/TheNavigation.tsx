@@ -58,7 +58,7 @@ function TheNavigation(){
                             <li>
                                 Router v6
                                 <ul>
-                                    <Link to='/router-v6/loader/33' ><li>The loader for component</li></Link>
+                                    <Link to='/router-v6/loader/33' ><li>The loader</li></Link>
                                     <Link to='/router-v6/action' ><li>The Action</li></Link>
                                 </ul>
                             </li>
