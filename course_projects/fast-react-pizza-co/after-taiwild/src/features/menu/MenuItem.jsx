@@ -7,7 +7,7 @@ import DeleteItem from '../cart/DeleteItem';
 function MenuItem({ pizza }) {
   const dispatch = useDispatch()
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
-  const currentQuantity = useSelector( getCurrentPizzaQuantityById(id) )
+  const isInCart = useSelector( getCurrentPizzaQuantityById(id) ) > 0
 
 
   function handleAddToCard(){
@@ -43,7 +43,7 @@ function MenuItem({ pizza }) {
             </p>
           )}
 
-          { currentQuantity > 0 && <DeleteItem pizzaId={id} />}
+          { isInCart && <DeleteItem pizzaId={id} />}
           { !soldOut && <Button type="small" onClick={ handleAddToCard} >Add to cart</Button> }
         </div>
       </div>
