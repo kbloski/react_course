@@ -70,3 +70,5 @@ export const getTotalCartPrice = (state) => {
 export const getCurrentPizzaQuantityById = id => state => {
     return state.cart.cart.find(pizza => pizza.pizzaId === id )?.quantity ?? 0
 }
+
+export const getCartItems = state => state.cart.cart
