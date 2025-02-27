@@ -4,25 +4,40 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 // createAsyncThunk
 export const fetchCounter = createAsyncThunk(
     'counter/fetchCounter',
-    async (_, {rejectWithValue}) => {
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts/1')
-        return response.json()
+    async (_, { rejectWithValue }: { rejectWithValue: (value: any) => void }) => {
+        try {
+            const response = await fetch('https://api-error')
+
+            if (!response.ok) {
+                    throw new Error('Server error')
+                }
+
+            const data = await response.json()
+            // Send data to reducer
+            return {
+                message: 'this is action.payload data',
+                counter: 333,
+                data,
+            }
+        } catch (error) {
+            // Send error to reducer
+            return rejectWithValue(error)
+        }
     }
 )
+    
 
-  
-  
- 
-
- 
- 
  
 // Slice 
 interface CounterState {
-    counter: number
+    status: string,
+    error: string,
+    counter: number,
 }
 
 const initialState : CounterState = {
+    status: '',
+    error: '',
     counter: 0
 }
 
@@ -37,12 +52,31 @@ export const counterSlice = createSlice({
         state.counter -= 1
         },
     },
+
+    // CREATE ASYNC THUNK
+    extraReducers: builder => {
+        // Sending request
+        builder.addCase( fetchCounter.pending, (state, action) => {
+            state.status = 'loading'
+        })
+
+        // Success
+        builder.addCase( fetchCounter.fulfilled, (state, action) => {
+            state.status = 'success'
+            if (!action.payload) return;
+            state.counter = action.payload.counter
+            
+        })
+
+        // Error
+        builder.addCase( fetchCounter.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message as any
+        })
+    }
 })
 
 export const { increment, decrement } = counterSlice.actions;
 
 export default counterSlice.reducer;
 
-function async(_: any, arg1: {}): import("@reduxjs/toolkit").AsyncThunkPayloadCreator<unknown, void, { state?: unknown; dispatch?: import("redux-thunk").ThunkDispatch<unknown, unknown, import("redux").UnknownAction>; extra?: unknown; rejectValue?: unknown; serializedErrorType?: unknown; pendingMeta?: unknown; fulfilledMeta?: unknown; rejectedMeta?: unknown }> {
-    throw new Error("Function not implemented.")
-}
