@@ -17,7 +17,7 @@ export const fetchCounter = createAsyncThunk(
 
 
 
-// Slice
+// Slice 
 interface CounterState {
     counter: number
 }
