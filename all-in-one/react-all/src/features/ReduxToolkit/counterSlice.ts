@@ -71,7 +71,7 @@ export const counterSlice = createSlice({
         // Error
         builder.addCase( fetchCounter.rejected, (state, action) => {
             state.status = 'failed'
-            state.error = action.error.message as any
+            state.error = action.error.message || 'Problem with fetching counter data.'
         })
     }
 })

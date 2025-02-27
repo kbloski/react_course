@@ -9,30 +9,28 @@ function getPosition() {
 
 export const fetchAddress = createAsyncThunk(
   'user/fetchAddress',
-  async function () {
+  async function (_, { rejectWithValue }) {
+    try {
+      const positionObj = await getPosition();
+      const position = {
+        latitude: positionObj.coords.latitude,
+        longitude: positionObj.coords.longitude,
+      };
 
-    console.log('fetchAddress');
-    // 1) We get the user's geolocation position
-    const positionObj = await getPosition();
-    const position = {
-      latitude: positionObj.coords.latitude,
-      longitude: positionObj.coords.longitude,
-    };
+      const addressObj = await getAddress(position);
+      const address = `${addressObj?.locality}, ${addressObj?.city} ${addressObj?.postcode}, ${addressObj?.countryName}`;
 
-    // 2) Then we use a reverse geocoding API to get a description of the user's address, so we can display it the order form, so that the user can correct it if wrong
-    const addressObj = await getAddress(position);
-    const address = `${addressObj?.locality}, ${addressObj?.city} ${addressObj?.postcode}, ${addressObj?.countryName}`;
-
-    // 3) Then we return an object with the data that we are interested in.
-    // Payload of the FULFILLED state
-    return { position, address };
+      return { position, address };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Nie udało się pobrać adresu.');
+    }
   }
 );
 
 const initialState = {
   username: '',
   status: 'idle',
-  position: {},
+  position: null,
   address: '',
   error: '',
 };
@@ -47,21 +45,22 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
-      .addCase(fetchAddress.pending, (state, action) => {
+      .addCase(fetchAddress.pending, (state) => {
         state.status = 'loading';
+        state.error = ''; // Resetujemy ewentualne stare błędy
       })
       .addCase(fetchAddress.fulfilled, (state, action) => {
+        console.log( action.payload)
         state.position = action.payload.position;
         state.address = action.payload.address;
         state.status = 'idle';
       })
       .addCase(fetchAddress.rejected, (state, action) => {
+        console.log(action.payload); // To jest poprawne, bo w "rejected" mamy payload
         state.status = 'error';
-        state.error =
-          'There was a problem getting your address. Make sure to fill this field!';
+        state.error = action.payload;
       }),
 });
 
 export const { updateName } = userSlice.actions;
-
 export default userSlice.reducer;
